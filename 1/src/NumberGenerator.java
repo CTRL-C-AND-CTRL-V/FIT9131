@@ -1,9 +1,9 @@
 import java.util.Random;
+/**
+ * A class to generate random number by default, or by given range
+ */
 public class NumberGenerator
 {
-    /*
-    * Class which generates random number. It can generate random number by default or given range.
-    */
     private int min, max, output;
 
     public NumberGenerator()
@@ -48,10 +48,16 @@ public class NumberGenerator
         return output;
     }
 
+    /**
+     * Method that generates random number by given range
+     * @param min An integer gives lower bound for the random number
+     * @param max An integer gives upper bound for the random number
+    */
     public int Generate(int min, int max)
     {
         Random r = new Random();
         output = r.nextInt(max + 1 - min) + min;
+        // update current max and min
         this.max = max;
         this.min = min;
         return output;

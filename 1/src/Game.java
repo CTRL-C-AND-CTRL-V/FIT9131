@@ -1,4 +1,7 @@
 import java.util.Scanner;
+/**
+ * A class that is responsible for the whole game
+ */
 public class Game {
     private Player player1;
     private Player player2;
@@ -11,6 +14,10 @@ public class Game {
         answer = 0;
     }
 
+    /**
+     * A method match the score based on the round number
+     * @param round An integer means the round number, used to get the score correspondingly
+     */
     private int calculateScore(int round)
     {
         int score = 0;
@@ -38,6 +45,9 @@ public class Game {
         return score;
     }
 
+    /**
+     * A method that determine who is the game winner based on the total score
+     */
     private void determineGameWinner()
     {
         System.out.println("--------------------------------------------------------");
@@ -63,6 +73,9 @@ public class Game {
         System.out.println("Welcome!!");
     }
 
+    /**
+     * A method that is the main game logic
+     */
     private void gamePlay() {
         for (int i = 0; i < 4; i++) // Four rounds
         {
@@ -108,14 +121,14 @@ public class Game {
                         player1.addScore(calculateScore(j));
                         System.out.println("You have scored " + calculateScore(j) + " points");
                         flagGameFinish = true;
-                        break;
+                        break; // finish this round
                     }
                     else if (player1.getGuess() == 999)
                     {
                         flagGameFinish = true;
                         player2.addScore(calculateScore(j));
                         System.out.println("Computer have scored " + calculateScore(j) + " points due to user's abandon guess");
-                        break;
+                        break; // finish this round
                     }
                     else // player has entered the invalid number
                     {
@@ -129,17 +142,20 @@ public class Game {
                 else // computer's round
                 {
                     System.out.println("It's computer's turn");
+                    // abandon constant
                     int abandonRate = 20;
+                    // generate random number from 1 to 20
                     NumberGenerator abandonGenerator = new NumberGenerator(1, abandonRate);
-                    if (abandonGenerator.getOutput() == j) // if computer decided to abandon
+                    if (abandonGenerator.getOutput() == 1) // if computer decides to abandon. 1/20 probability
                     {
                         flagGameFinish = true;
                         player1.addScore(calculateScore(j));
                         System.out.println("You have scored " + calculateScore(j) + " points due to user's abandon guess");
-                        break;
+                        break; // finish this round
                     }
                     else
                     {
+                        // a random number generator object for computer's guess
                         computerGenerator.Generate(currentMin, currentMax);
                         player2.setGuess(computerGenerator.getOutput());
                         System.out.println("Computer guess: " + computerGenerator.getOutput());
@@ -161,7 +177,7 @@ public class Game {
                             player2.addScore(calculateScore(j));
                             System.out.println("Computer have scored " + calculateScore(j) + " points");
                             flagGameFinish = true;
-                            break;
+                            break; // finish this round
                         }
                         flagWhoStart = 0; // switch turn
                     }
@@ -203,6 +219,9 @@ public class Game {
         return answer;
     }
 
+    /**
+     * A method that generate the answer by a default constructor
+     */
     private void generateAnswer()
     {
         NumberGenerator answerGenerator = new NumberGenerator();
@@ -215,20 +234,24 @@ public class Game {
 
         myGame.displayWelcome();
 
-        myGame.setUpUser();
+        myGame.setUpPlayer();
 
         myGame.gamePlay();
 
         myGame.determineGameWinner();
     }
 
-    private void setUpUser()
+    /**
+     *  A method to set up player, create player objects
+     */
+    private void setUpPlayer()
     {
         System.out.println("Please enter your name. ");
         while (true)
         {
             Scanner console = new Scanner(System.in);
             String userName = console.nextLine();
+            userName = userName.trim(); // Eliminate leading and trailing spaces
             if (userName.length() < 8)
             {
                 player1 = new Player(userName);

@@ -1,8 +1,8 @@
 import java.util.Scanner;
+/**
+ * A class to generate player
+ */
 public class Player {
-    /*
-    * Class for initialing the players
-    * */
     private String name;
     private int guess;
     private int score;
@@ -21,6 +21,10 @@ public class Player {
         score = 0;
     }
 
+    /**
+     * Method that sum up the score by given the new score
+     * @param score An integer value representing new score made in the current round
+     */
     public void addScore(int score)
     {
         this.score += score;
@@ -38,16 +42,20 @@ public class Player {
         return score;
     }
 
+    /**
+     * A method that ask user input and validate
+     */
     public void getUserGuess()
     {
         Scanner console = new Scanner(System.in);
         System.out.println("Enter your guess: ");
-
         while (true)
         {
             String userInput = console.nextLine();
-            try // determine if user input is a number
+            // determine if user input is a number
+            try
             {
+                // try statement to ensure wrong type won't raise an error and break the loop
                 guess = Integer.parseInt(userInput);
                 if (guess <=100 && guess >=1 )
                 {
@@ -62,6 +70,7 @@ public class Player {
                     System.out.println("Please enter number between 1 and 100(inclusive), or 999 for abandon");
                 }
             }
+            // if user input is not a integer
             catch (Exception e)
             {
                 System.out.println("Please enter an integer between 1 and 100(inclusive)");
