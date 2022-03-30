@@ -76,7 +76,7 @@ public class Game {
             System.out.println("--------------------------------------------------------");
             // a random number generator to generator random number within the appropriate range
             NumberGenerator computerGenerator = new NumberGenerator();
-            //flag is a random number determining who goes first.
+            //flag is a random number determining who goes first (0 or 1).
             int flagWhoStart = (int) Math.round(Math.random());
             //flag for if anyone guess the correct answer or any player abandon the guess
             boolean flagGameFinish = false;
@@ -85,7 +85,9 @@ public class Game {
                 if (flagWhoStart == 0) // player's round
                 {
                     System.out.println("It's your turn. ");
+
                     player1.getUserGuess();
+
                     if (player1.getGuess() > answer && player1.getGuess() <= currentMax)
                     {
                         // - 1 is because next player can not guess the same number from the last guess
@@ -121,7 +123,7 @@ public class Game {
                         System.out.println("You wasted a guess");
                         System.out.println();
                     }
-                    flagWhoStart = 1;
+                    flagWhoStart = 1; // switch turn
 
                 }
                 else // computer's round
@@ -161,12 +163,12 @@ public class Game {
                             flagGameFinish = true;
                             break;
                         }
-                        flagWhoStart = 0;
+                        flagWhoStart = 0; // switch turn
                     }
                 }
 
             }
-            if (!flagGameFinish) // if all the guesses run out
+            if (!flagGameFinish) // if guesses run out
             {
                 System.out.println("This round is over, the answer is " + answer);
                 System.out.println("Player last guess is " + player1.getGuess()+
