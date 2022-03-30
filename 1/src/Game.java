@@ -1,24 +1,17 @@
 import java.util.Scanner;
 public class Game {
-    private static Player player1;
-    private static Player player2;
-    protected static int abandonRate = 20;
-    public static int answer;
+    private Player player1;
+    private Player player2;
+    public int answer;
 
-    public static void main(String[] args)
+    public Game()
     {
-
-        Game myGame = new Game();
-        displayWelcome();
-
-        setUpUser();
-
-        gamePlay();
-
-        determineGameWinner();
+        player1 = new Player();
+        player2 = new Player();
+        answer = 0;
     }
 
-    private static int calculateScore(int round)
+    private int calculateScore(int round)
     {
         int score = 0;
         switch (round)
@@ -45,7 +38,7 @@ public class Game {
         return score;
     }
 
-    private static void determineGameWinner()
+    private void determineGameWinner()
     {
         System.out.println("--------------------------------------------------------");
         System.out.println("                        Game Over");
@@ -65,12 +58,12 @@ public class Game {
         }
     }
 
-    private static void displayWelcome()
+    private void displayWelcome()
     {
         System.out.println("Welcome!!");
     }
 
-    private static void gamePlay() {
+    private void gamePlay() {
         for (int i = 0; i < 4; i++) // Four rounds
         {
             // Initialise value before each round
@@ -134,7 +127,8 @@ public class Game {
                 else // computer's round
                 {
                     System.out.println("It's computer's turn");
-                    NumberGenerator abandonGenerator = new NumberGenerator(1,abandonRate);
+                    int abandonRate = 20;
+                    NumberGenerator abandonGenerator = new NumberGenerator(1, abandonRate);
                     if (abandonGenerator.getOutput() == j) // if computer decided to abandon
                     {
                         flagGameFinish = true;
@@ -195,13 +189,38 @@ public class Game {
         }
     }
 
-    private static void generateAnswer()
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public int getAnswer() {
+        return answer;
+    }
+
+    private void generateAnswer()
     {
         NumberGenerator answerGenerator = new NumberGenerator();
         answer = answerGenerator.getOutput();
     }
 
-    private static void setUpUser()
+    public static void main(String[] args)
+    {
+        Game myGame = new Game();
+
+        myGame.displayWelcome();
+
+        myGame.setUpUser();
+
+        myGame.gamePlay();
+
+        myGame.determineGameWinner();
+    }
+
+    private void setUpUser()
     {
         System.out.println("Please enter your name. ");
         while (true)
@@ -219,5 +238,17 @@ public class Game {
                 System.out.println("Name must be less than 8 characters, try again");
             }
         }
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
+    public void setAnswer(int answer) {
+        this.answer = answer;
     }
 }
